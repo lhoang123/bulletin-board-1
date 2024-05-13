@@ -35,13 +35,8 @@
         <input type="date" id="expire_date" name="query_expires_on">
       </div>
 
-      <div>
-        <label for="board_id_box">
-          Board ID
-        </label>
+    <input type="hidden" id="board_id_box" name="query_board_id" value = <%= @the_board.id%> >
 
-        <input type="text" id="board_id_box" name="query_board_id">
-      </div>
     
       <button>
         Add post
@@ -66,8 +61,8 @@
     <tr>
       <td><%= a_post.title %> </td>
       <td><%= a_post.body %> </td>
-      <td><%= a_post.created_at %> </td>
-      <td><%= a_post.expires_on %> </td>
+      <td><%= a_post.created_at.strftime("%b %e, %Y") %> </td>
+      <td><%= a_post.expires_on.strftime("%b %e, %Y") %> </td>
     </tr>
   <% end %>
 </table>
