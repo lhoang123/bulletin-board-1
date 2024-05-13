@@ -1,71 +1,73 @@
-<div>
-  <div>
-    <h1>
-      Board #<%= @the_board.id %> details
-    </h1>
 
-    <div>
-      <div>
-        <a href="/boards">
-          Go back
-        </a>
-      </div>
+<h1>
+   <%= @the_board.name %> 
+</h1>
+  
 
-      <div>
-        <a href="/delete_board/<%= @the_board.id %>">
-          Delete board
-        </a>
-      </div>
-    </div>
+ <hr>
 
-    <dl>
-      <dt>
-        Name
-      </dt>
-      <dd>
-        <%= @the_board.name %>
-      </dd>
-
-      <dt>
-        Created at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_board.created_at) %> ago
-      </dd>
-
-      <dt>
-        Updated at
-      </dt>
-      <dd>
-        <%= time_ago_in_words(@the_board.updated_at) %> ago
-      </dd>
-    </dl>
-  </div>
-</div>
-
-<hr>
-
-
-<div>
-  <div>
     <h2>
-      Edit board
+      Add a new post
     </h2>
 
-    <form action="/modify_board/<%= @the_board.id %>"  method="post" >
+    <form action="/insert_post" method="post">
       <div>
-        <label for="name_box">
-          Name
+        <label for="title_box">
+          Title
         </label>
 
-        <input type="text" id="name_box" name="query_name" value="<%= @the_board.name %>">
+        <input type="text" id="title_box" name="query_title">
       </div>
 
+      <div>
+        <label for="body_box">
+          Body
+        </label>
+
+        <textarea type="text" id="body_box" name="query_body" cols="30" rows="10"></textarea>
+      </div>
+
+      <div>
+        <label for="expire_date">
+          Expires on
+        </label>
+
+        <input type="date" id="expire_date" name="query_expires_on">
+      </div>
+
+      <div>
+        <label for="board_id_box">
+          Board ID
+        </label>
+
+        <input type="text" id="board_id_box" name="query_board_id">
+      </div>
+    
       <button>
-        Update board
+        Add post
       </button>
     </form>
-  </div>
-</div>
 
 <hr>
+
+<h2>Active posts</h2>
+
+<% matching_posts = Post.where({ :board_id => @the_board.id }) %>
+
+<table border="1">
+  <tr>
+    <th>Title</th>
+    <th>Body</th>
+    <th>Posted on</th>
+    <th>Expires on</th>
+  </tr>
+
+  <% matching_posts.each do |a_post| %>
+    <tr>
+      <td><%= a_post.title %> </td>
+      <td><%= a_post.body %> </td>
+      <td><%= a_post.created_at %> </td>
+      <td><%= a_post.expires_on %> </td>
+    </tr>
+  <% end %>
+</table>
